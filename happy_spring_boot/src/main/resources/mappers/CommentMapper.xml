@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssaffy.happyapi.Community.CommentMapper">
+
+	<insert id="addComment" parameterType="map">
+		insert into comment( comment,articleNo,writer) value( #{comment},#{articleNo},#{writer});
+	</insert>
+ 
+	<select id="getCommentList" parameterType="int" resultType="com.ssaffy.happyapi.Community.CommentDto" >
+	<![CDATA[ 
+		 select * from comment where articleNo=#{articleNo};
+	]]>
+	</select>
+	
+	<update id="updateComment" parameterType="map">
+		<![CDATA[ 
+		 update comment set comment=#{comment} where commentNo=#{commentNo};
+	]]>
+	</update>
+	
+	<delete id="deleteComment" parameterType="int">
+		<![CDATA[ 
+		 delete from comment where commentNo=#{commentNo};
+	]]>
+	</delete>
+</mapper>

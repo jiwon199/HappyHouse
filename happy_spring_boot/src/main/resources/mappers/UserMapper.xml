@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssaffy.happyapi.User.UserMapper">
+	<resultMap type="com.ssaffy.happyapi.User.UserDto" id="userDto">
+		<result column="id" property="id" />
+		<result column="pw" property="pw" />
+		<result column="name" property="name" />
+		<result column="addr" property="addr" />
+		<result column="tel" property="tel" />
+	</resultMap>
+	
+	<select id="login" parameterType="map" resultMap="userDto">
+		select id, pw, name, addr, tel from user where id = #{id} and pw = #{pw}
+	</select>
+	
+	<insert id="register" parameterType="map">
+		insert into user value(#{id}, #{pw}, #{name}, #{addr}, #{tel})
+	</insert>
+	
+	<update id="edit" parameterType="map">
+		update user set pw=#{pw}, name=#{name}, addr=#{addr}, tel=#{tel} where id=#{id};
+	</update>
+	
+	<delete id="delLikeArea" parameterType="map">
+		delete from likearea where id=#{id} and dongCode=#{dongCode};
+	</delete>
+	
+	<delete id="delete" parameterType="string">
+		delete from user where id=#{id}
+	</delete>
+	
+	<select id="confirmId" parameterType="string" resultMap="userDto">
+		select id from user where id=#{id}
+	</select>
+	
+	<select id="getLikeArea" parameterType="string" resultType="string">
+		select dongCode from likearea where id=#{id}
+	</select>
+	
+	<select id="getDongInfo" parameterType="string" resultType="com.ssaffy.happyapi.User.DongDto">
+		select sidoName, gugunName, dongName from dongcode where dongCode=#{dongCode}
+	</select>
+	
+	<select id="isAdmin" parameterType="string" resultType="int">
+		select count(id) from admin where id=#{id}
+	</select>
+	
+	<select id="userList" resultMap="userDto">
+		select id, pw, name, addr, tel from user
+	</select>
+	
+	<insert id="promotion" parameterType="string">
+		insert into admin value(#{id})
+	</insert>
+	
+	<insert id="writeNotice" parameterType="map">
+		insert into notice (title, content) value (#{title}, #{content});
+	</insert>
+	
+	<select id="getNotice" resultType="com.ssaffy.happyapi.User.NoticeDto">
+		select num, title, content from notice order by num desc limit 5;
+	</select>
+	<delete id="noticeDelete" parameterType="int">
+		delete from notice where num = #{num}
+	</delete>
+	<select id="idEmail" parameterType="map" resultType="com.ssaffy.happyapi.User.UserDto">
+		select id, pw, name, addr, tel from user where id=#{id}
+	</select>
+</mapper>

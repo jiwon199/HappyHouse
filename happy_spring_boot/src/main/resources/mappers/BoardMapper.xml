@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssaffy.happyapi.Community.Board.BoardMapper">
+	<select id="getList" resultType="com.ssaffy.happyapi.Community.Board.BoardDto">
+		select * from board order by articleNo desc
+	</select>
+	
+	<select id="getPageList" parameterType="int" resultType="com.ssaffy.happyapi.Community.Board.BoardDto">
+		select * from board order by articleNo desc LIMIT 5 OFFSET #{offset};
+	</select>
+	<select id="getPageList2" parameterType="com.ssaffy.happyapi.Community.Board.SearchDto" resultType="com.ssaffy.happyapi.Community.Board.BoardDto">
+		select * from board where title like concat('%', #{input}, '%') order by articleNo desc LIMIT 5 OFFSET #{offset}
+	</select>
+	<select id="getPageList3" parameterType="com.ssaffy.happyapi.Community.Board.SearchDto" resultType="com.ssaffy.happyapi.Community.Board.BoardDto">
+		select * from board where writer like concat('%', #{input}, '%') order by articleNo desc LIMIT 5 OFFSET #{offset}
+	</select>
+	
+	<insert id="write" parameterType="map">
+		insert into board(title, content, writer, hit, regTime) value(#{title}, #{content}, #{writer}, 0, now());
+	</insert>
+	
+	<update id="hitting" parameterType="map">
+		update board set hit=#{hit} where articleNo=#{articleNo};
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		delete from board where articleNo=#{articleNo};
+	</delete>
+	<update id="update" parameterType="map">
+		update board set content=#{content}, title=#{title} where articleNo=#{articleNo};
+	</update>
+	<select id="getTotalBoardCnt" resultType="int">
+		select count(*) from board;
+	</select>
+	<select id="loadNo" resultType="int">
+		select max(articleNo) from board
+	</select>
+	<select id="totalPage" resultType="int">
+		select count(articleNo) from board
+	</select>
+	<select id="totalPage2" parameterType="string" resultType="int">
+		select count(articleNo) from board where title like concat('%', #{input}, '%')
+	</select>
+	<select id="totalPage3" parameterType="string" resultType="int">
+		select count(articleNo) from board where writer like concat('%', #{input}, '%')
+	</select>
+	<update id="edit" parameterType="map">
+		update board set title = #{title}, content=#{content} where articleNo=#{articleNo}
+	</update>
+</mapper>

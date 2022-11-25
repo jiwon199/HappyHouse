@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssaffy.happyapi.House.HouseMapper">
+	<select id="getSido" resultType="string">
+	<![CDATA[
+		select distinct sidoName from dongCode
+	]]>
+	</select>	
+	<select id="getGugun" resultType="string">
+	<![CDATA[
+		select distinct gugunName from dongCode where sidoName=#{sido}
+	]]>
+	</select>
+	<select id="getDong" resultType="string" parameterType="map">
+	<![CDATA[
+		select dongName from dongCode where gugunName=#{gugun} and sidoName=#{sido}
+	]]>
+	</select>
+	
+	<select id="getDongCode" resultType="string" parameterType="com.ssaffy.happyapi.House.AreaVO">
+	<![CDATA[
+		select dongCode from dongCode where sidoName=#{sido} and gugunName=#{gugun} and dongName=#{dong}
+	]]>
+	</select>
+	
+	<select id="getList" parameterType="map" resultType="com.ssaffy.happyapi.House.HouseVO" >
+	<![CDATA[ 
+		select houseinfo.aptCode,apartmentName,floor,area,dealAmount,buildYear,roadName,lng,lat,houseinfo.dongCode from houseinfo 
+		inner join housedeal
+		on houseinfo.aptCode=housedeal.aptCode
+		where houseinfo.dongCode=#{dongCode}
+		and housedeal.dealYear=#{dealYear} and housedeal.dealMonth=#{dealMonth};
+	]]>
+	</select>
+	<select id="getDeal" resultType="com.ssaffy.happyapi.House.dealVO" >
+	<![CDATA[
+		select dealAmount,dealYear,dealMonth,dealDay,area,floor from housedeal where aptCode=#{aptCode} and dealYear>=2021;
+	]]>
+	</select>
+	
+	<select id="isLike" parameterType="map" resultType="integer" >
+	<![CDATA[
+		select count(*) from likeArea where id=#{id} and dongCode=#{dongCode};
+	]]>
+	</select>
+	
+
+	<insert id="addLikeArea" parameterType="map"  >
+	<![CDATA[
+		insert into likeArea value(#{id},#{dongCode});
+	]]>
+	</insert>
+	
+	<delete id="deleteLikeArea" parameterType="map">
+		delete from likeArea where id=#{id} and dongCode=#{dongCode};
+	</delete>
+	
+	<select id="getAvg" resultType="string" parameterType="string">
+	<![CDATA[
+		select ROUND(avg(CAST(REPLACE(dealAmount, ',', '')  AS UNSIGNED))) as avgDeal 
+		from housedeal where aptCode=#{aptCode};
+	]]>
+	</select>
+	
+	 
+<select id="getDongAvg" resultType="com.ssaffy.happyapi.House.AvgDongVO" parameterType="map">
+	<![CDATA[
+		select   ROUND(avg(CAST(REPLACE(dealAmount, ',', '')  AS UNSIGNED))) as avg, houseInfo.dong as dongName   from houseinfo 
+		inner join housedeal
+		on houseinfo.aptCode=housedeal.aptCode
+		where houseinfo.dongCode in (select dongCode  from dongCode where sidoName=#{sido} and gugunName= #{gugun})
+		group by(houseinfo.dongCode);
+	]]>
+	</select>
+
+</mapper>
