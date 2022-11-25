@@ -14,11 +14,12 @@
 주택 거래 정보 플랫폼
 
 SSAFY 8기 관통프로젝트
+🥇 최우수상 수상
 
 <img src="https://raw.githubusercontent.com/okanekudasai/happyimage/74c2d74e24e7f0b3a12bf8b8efcffc43efabb3b0/%EB%A9%94%EC%9D%B8%ED%8E%98%EC%9D%B4%EC%A7%80.png" width="700"> <br><br>
 
 <br><br>
-
+ 
 <h2> 1️⃣ 기획배경 </h2>
 
 *한 곳에서 원하는 매매물건을 찾고 유저간의 소통의 공간을 마련해주는 서비스는 없을까?*
