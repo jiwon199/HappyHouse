@@ -13,7 +13,7 @@
 더 좋은 집을 찾기 위한 지침서.  
 주택 거래 정보 플랫폼
 
-SSAFY 8기 관통프로젝트
+SSAFY 8기 관통프로젝트 <br>
 🥇 최우수상 수상
 
 <img src="https://raw.githubusercontent.com/okanekudasai/happyimage/74c2d74e24e7f0b3a12bf8b8efcffc43efabb3b0/%EB%A9%94%EC%9D%B8%ED%8E%98%EC%9D%B4%EC%A7%80.png" width="700"> <br><br>
